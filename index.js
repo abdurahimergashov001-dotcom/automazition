@@ -16,6 +16,16 @@ const chatId = process.env.CHANNEL_ID;
 const geminiApiKey = process.env.GEMINI_API_KEY;
 const dbPath = './db.json';
 
+// Dummy HTTP server for Render to prevent "No open ports detected" error
+const http = require('http');
+const port = process.env.PORT || 10000;
+http.createServer((req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('Bot is running!\n');
+}).listen(port, () => {
+    console.log(`Dummy server listening on port ${port}`);
+});
+
 // Initialize APIs
 const bot = new Telegraf(botToken);
 const parser = new RSSParser();
